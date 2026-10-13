@@ -9,19 +9,27 @@ Works on macOS 13 (Ventura) or newer, on both Apple Silicon and Intel Macs.
 ## Install
 
 1. Open the downloaded **ReaderMode.dmg**.
-2. Drag **ReaderMode** onto the **Applications** folder in that window.
+2. Drag **ReaderMode** onto the **Applications** folder in that window. (Don't open it from inside this window.)
+
+   <img src="docs/images/1-drag-to-applications.png" alt="Drag ReaderMode onto the Applications folder" width="640">
+
 3. Open **Applications** and double-click **Reader Mode**.
 
 ### The first time you open it
 
-Your Mac will say it can't verify the app. That's normal for apps that aren't from the App Store. To allow it:
+Your Mac will say it can't verify the app. That's normal for apps that aren't from the App Store, and you only need to do this once.
 
-1. Click **Done** on the message.
-2. Open **System Settings → Privacy & Security**.
-3. Scroll down and click **Open Anyway** next to Reader Mode.
-4. Enter your Mac password if asked.
+1. Click **Done**. Don't click Move to Trash.
 
-You only need to do this once.
+   <img src="docs/images/2-click-done.png" alt="Click Done on the 'ReaderMode Not Opened' message" width="320">
+
+2. Open **System Settings**, click **Privacy & Security**, scroll down, and click **Open Anyway** next to ReaderMode. Enter your Mac password if asked.
+
+   <img src="docs/images/3-open-anyway.png" alt="Privacy & Security settings with the Open Anyway button" width="640">
+
+3. Click **Open** on the last prompt. From now on Reader Mode opens normally.
+
+If you don't see **Open Anyway**, try opening Reader Mode once more, then go straight back to Privacy & Security. The button only appears for about an hour after the app is blocked.
 
 ## How to use it
 
