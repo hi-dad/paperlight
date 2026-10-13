@@ -30,15 +30,16 @@ final class Filter: ObservableObject {
     }
 
     init() {
-        d.register(defaults: ["enabled": false, "warmth": 0.55, "brightness": 0.90,
-                              "contrast": -0.20, "builtInOnly": false])
+        // First launch starts on the Favorite setting.
+        d.register(defaults: ["enabled": false, "warmth": 0.036, "brightness": 0.848,
+                              "contrast": -0.311, "builtInOnly": false])
         enabled = d.bool(forKey: "enabled")
         warmth = d.double(forKey: "warmth")
         brightness = d.double(forKey: "brightness")
         contrast = d.double(forKey: "contrast")
         builtInOnly = d.bool(forKey: "builtInOnly")
         // Each slot starts as the Favorite (saved from the old single-favorite version if present,
-        // else a soft-contrast, barely-warm, slightly dimmed default).
+        // else the default Favorite: soft contrast, barely warm, slightly dimmed).
         let fav = d.array(forKey: "favorite") as? [Double] ?? [0.036, 0.848, -0.311]
         let saved = d.array(forKey: "slots") as? [[Double]] ?? Array(repeating: fav, count: 4)
         slots = saved.map { Setting(warmth: $0[0], brightness: $0[1], contrast: $0[2]) }
