@@ -1,22 +1,22 @@
-READER MODE — a warm, paper-like screen filter for your Mac
+PAPERLIGHT — a warm, paper-like screen filter for your Mac
 ============================================================
 
 INSTALL
-1. Drag "ReaderMode" onto the "Applications" folder in this window.
-2. Open Applications and double-click Reader Mode.
+1. Drag "Paperlight" onto the "Applications" folder in this window.
+2. Open Applications and double-click Paperlight.
 
 THE FIRST TIME YOU OPEN IT
 Your Mac will say it "can't verify" the app, because it isn't from the App Store.
 That's normal for apps shared between friends. To allow it:
   1. Click "Done" (or "OK") on that message.
   2. Open System Settings > Privacy & Security.
-  3. Scroll down and click "Open Anyway" next to Reader Mode.
+  3. Scroll down and click "Open Anyway" next to Paperlight.
   4. Enter your Mac password if asked, then click "Open Anyway" again.
 You only have to do this once.
 
 USING IT
 - Look for the book icon at the top right of your screen (in the menu bar).
-- Click it to switch Reader Mode on and adjust Contrast, Warmth and Brightness.
+- Click it to switch Paperlight on and adjust Contrast, Warmth and Brightness.
 - Four slots (Favorite, #2, #3, #4): pick one, adjust the sliders, press Save.
 - Control + Option + R turns it on/off from anywhere.
 - Tick "Open at login" to start it automatically.

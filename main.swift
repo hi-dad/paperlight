@@ -157,7 +157,7 @@ struct MenuView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Text("Reader Mode").font(.headline)
+                Text("Paperlight").font(.headline)
                 Spacer()
                 Toggle("", isOn: $f.enabled).toggleStyle(.switch).labelsHidden()
             }
@@ -215,7 +215,7 @@ struct MenuView: View {
 }
 
 @main
-struct ReaderModeApp: App {
+struct PaperlightApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var f = Filter.shared
 
