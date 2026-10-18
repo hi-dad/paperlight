@@ -6,7 +6,7 @@ A tiny Mac menu bar app that makes your screen easier to read — softer contras
 
 <img src="docs/images/0-panel.png" alt="The Paperlight panel, opened from the book icon in the menu bar" width="360">
 
-## ⬇️ [Download Paperlight for Mac](https://github.com/dsryan8197/paperlight/releases/latest/download/Paperlight.dmg)
+## ⬇️ [Download Paperlight for Mac](https://github.com/hi-dad/paperlight/releases/latest/download/Paperlight.dmg)
 
 Works on macOS 13 (Ventura) or newer, on both Apple Silicon and Intel Macs.
 
