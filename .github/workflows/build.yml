@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    permissions:
+      contents: write # to publish a release when main changes
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          swiftc --version
+
+      - name: Build the app and Paperlight.dmg
+        run: ./build.sh dist
+
+      - name: Verify bundle
+        run: |
+          test -x "Paperlight.app/Contents/MacOS/Paperlight"
+          plutil -lint "Paperlight.app/Contents/Info.plist"
+          codesign --verify --verbose "Paperlight.app"
+          lipo "Paperlight.app/Contents/MacOS/Paperlight" -verify_arch arm64 x86_64
+          hdiutil verify dist/Paperlight.dmg
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Paperlight
+          path: dist/Paperlight.dmg
+
+      # Every update to main becomes the new download behind the README button.
+      - name: Publish release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="$(plutil -extract CFBundleShortVersionString raw "Paperlight.app/Contents/Info.plist")"
+          gh release create "build-$GITHUB_RUN_NUMBER" dist/Paperlight.dmg \
+            --target "$GITHUB_SHA" --latest \
+            --title "Paperlight $version (build $GITHUB_RUN_NUMBER)" --generate-notes

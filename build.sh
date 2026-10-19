@@ -21,7 +21,7 @@ cat > $APP/Contents/Info.plist <<PLIST
   <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundleExecutable</key><string>Paperlight</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleShortVersionString</key><string>1.2</string>
+  <key>CFBundleShortVersionString</key><string>1.3</string>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
   <key>LSUIElement</key><true/>
 </dict></plist>
@@ -39,6 +39,9 @@ if [[ "$1" == "dist" ]]; then
   rm -rf dist/stage
   echo "Made dist/Paperlight.dmg"
 fi
+
+# On GitHub's build machines (CI is set there), stop here: the DMG is what gets published.
+[[ -n "$CI" ]] && exit 0
 
 # Install: move the app into /Applications so there's only ever one copy on this Mac.
 pkill -x Paperlight || true
