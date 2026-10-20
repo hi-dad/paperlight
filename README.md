@@ -2,71 +2,40 @@
 
 <img src="docs/images/icon.png" alt="Paperlight app icon" width="128">
 
-*Formerly Reader Mode.*
+**A tiny Mac menu bar app that makes your screen easier on the eyes: softer contrast, a warm paper-like tint and gentle dimming.**
 
-A tiny Mac menu bar app that makes your screen easier to read — softer contrast, a warm paper-like tint, and gentle dimming. Inspired by the "Reader" picture mode on LG monitors.
+<img src="docs/images/demo.gif" alt="Before and after: a slider wipes across a page, showing Paperlight's softer, warmer screen" width="720">
 
-<img src="docs/images/0-panel.png" alt="The Paperlight panel, opened from the book icon in the menu bar" width="360">
-
-## ⬇️ [Download Paperlight for Mac](https://github.com/hi-dad/paperlight/releases/latest/download/Paperlight.dmg)
-
-Works on macOS 13 (Ventura) or newer, on both Apple Silicon and Intel Macs.
+### [⬇️ Download Paperlight](https://github.com/hi-dad/paperlight/releases/latest/download/Paperlight.dmg)
+Free · macOS 13 or newer · always the latest version
 
 ## Install
 
-1. Open the downloaded **Paperlight.dmg**.
-2. Drag **Paperlight** onto the **Applications** folder in that window. (Don't open it from inside this window.)
-
-   <img src="docs/images/1-drag-to-applications.png" alt="Drag Paperlight onto the Applications folder" width="640">
-
-3. Open **Applications** and double-click **Paperlight**.
-
-### The first time you open it
-
-Your Mac will say it can't verify the app. That's normal for apps that aren't from the App Store, and you only need to do this once.
-
-1. Click **Done**. Don't click Move to Trash.
-
-   <img src="docs/images/2-click-done.png" alt="Click Done on the 'Paperlight Not Opened' message" width="320">
-
-2. Open **System Settings**, click **Privacy & Security**, scroll down, and click **Open Anyway** next to Paperlight. Enter your Mac password if asked.
-
-   <img src="docs/images/3-open-anyway.png" alt="Privacy & Security settings with the Open Anyway button" width="640">
-
-3. Click **Open** on the last prompt. From now on Paperlight opens normally.
-
-If you don't see **Open Anyway**, try opening Paperlight once more, then go straight back to Privacy & Security. The button only appears for about an hour after the app is blocked.
+1. Open **Paperlight.dmg** and drag Paperlight into **Applications**.
+2. Open it. When macOS says it can't verify the app, click **Done**, then go to **System Settings → Privacy & Security** and click **Open Anyway** (once).
 
 ## How to use it
 
-- Click the **📖 book icon** in your menu bar (top right of the screen).
-- Flip the switch to turn Paperlight on.
-- Adjust the sliders:
-  - **Contrast**: left = softer (less glare, like paper), right = sharper (faint text stands out).
-  - **Warmth**: adds a cozy yellow tint and reduces blue light.
-  - **Brightness**: dims the screen beyond the normal setting.
-- **Four slots (Favorite, #2, #3, #4)**: click one, adjust the sliders, press **Save**. Click a slot any time to switch to it.
-- **⌃⌥R** (Control + Option + R) turns it on or off from anywhere.
-- **Only laptop screen** leaves external monitors alone.
-- **Open at login** starts it automatically.
+- Click the **book icon** in your menu bar and flip the switch on.
+- **Contrast:** softer like paper, or sharper for faint text. **Warmth:** a cozy tint with less blue light. **Brightness:** dims below the normal minimum.
+- Save up to four looks in the slots and switch with one click.
+- **⌃⌥R** turns it on or off from anywhere.
 
-## Is it safe?
+## Safe by design
 
-Yes. It doesn't change any system settings, and it doesn't need your password or special permissions. It uses the same standard macOS feature that apps like f.lux use to adjust screen colors. Quit the app (or restart your Mac) and your screen goes straight back to normal.
+No special permissions, no system settings changed. Quit it and your screen goes straight back to normal.
 
-**To uninstall:** click the book icon → **Quit**, then drag Paperlight from Applications to the Trash.
+**Update:** download again and replace the app. **Remove:** book icon → **Quit**, then drag it to the Trash.
 
-## Build it yourself
+<details><summary>Build it yourself</summary>
 
-You need the Xcode Command Line Tools (`xcode-select --install`).
+Needs the Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
-./build.sh        # builds and installs to /Applications
+./build.sh        # builds, installs to Applications and opens it
 ./build.sh dist   # also makes dist/Paperlight.dmg
 ```
 
-The whole app is one file: [`main.swift`](main.swift).
+</details>
 
-## License
-
-[MIT](LICENSE)
+MIT License
