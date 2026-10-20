@@ -1,5 +1,7 @@
 # Paperlight
 
+<img src="docs/images/icon.png" alt="Paperlight app icon" width="128">
+
 *Formerly Reader Mode.*
 
 A tiny Mac menu bar app that makes your screen easier to read — softer contrast, a warm paper-like tint, and gentle dimming. Inspired by the "Reader" picture mode on LG monitors.
