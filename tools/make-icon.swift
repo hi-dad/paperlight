@@ -223,51 +223,46 @@ let designs: [String: Design] = [
         m.addLine(to: CGPoint(x: 66, y: 62)); m.addLine(to: CGPoint(x: 81, y: 79)); m.closeSubpath()
         p.fill(m, hex(0x2563EB, 0.55))
     },
-    // An open book in front of a warm sun.
+    // A split screen: bright on the left, warm paper on the right, with a slider between.
     "paperlight": Design(top: 0xFFE0CC, bottom: 0xF49C8C) { p in
-        p.fill(p.circle(52, 30, 15), hex(0xFFE59A))
-        func bez(_ a: CGPoint, _ b: CGPoint, _ c: CGPoint, _ d: CGPoint, _ t: CGFloat) -> CGPoint {
-            let u = 1 - t
-            return CGPoint(x: u*u*u*a.x + 3*u*u*t*b.x + 3*u*t*t*c.x + t*t*t*d.x,
-                           y: u*u*u*a.y + 3*u*u*t*b.y + 3*u*t*t*c.y + t*t*t*d.y)
-        }
-        for flip in [false, true] {
-            let x: (CGFloat) -> CGFloat = flip ? { 104 - $0 } : { $0 }
-            let top = [CGPoint(x: 52, y: 40), CGPoint(x: x(42), y: 32), CGPoint(x: x(26), y: 32), CGPoint(x: x(14), y: 38)]
-            let bottom = [CGPoint(x: 52, y: 86), CGPoint(x: x(42), y: 78), CGPoint(x: x(26), y: 76), CGPoint(x: x(14), y: 82)]
-            let page = CGMutablePath()
-            page.move(to: top[0]); page.addCurve(to: top[3], control1: top[1], control2: top[2])
-            page.addLine(to: bottom[3]); page.addCurve(to: bottom[0], control1: bottom[2], control2: bottom[1])
-            page.closeSubpath()
-            p.liquid(page, top: 0.8, bottom: 0.35)
-            // Text lines that bend with the page: blend between its top and bottom edges.
-            let ink = hex(0xD9604E, 0.42)
-            for (i, f) in [CGFloat(0.26), 0.42, 0.58].enumerated() {
-                let end: CGFloat = i == 2 ? 0.62 : 0.84
-                let line = CGMutablePath()
-                for k in 0...24 {
-                    let t = 0.14 + (end - 0.14) * CGFloat(k) / 24
-                    let pt = bez(top[0], top[1], top[2], top[3], t), pb = bez(bottom[0], bottom[1], bottom[2], bottom[3], t)
-                    let q = CGPoint(x: pt.x + (pb.x - pt.x) * f, y: pt.y + (pb.y - pt.y) * f)
-                    if k == 0 { line.move(to: q) } else { line.addLine(to: q) }
-                }
-                p.ctx.addPath(line); p.ctx.setStrokeColor(ink.cgColor); p.ctx.setLineWidth(2.2)
-                p.ctx.setLineCap(.round); p.ctx.setLineJoin(.round); p.ctx.strokePath()
-            }
-        }
+        let frame = p.rr(12, 22, 80, 60, 11)
+        p.liquid(frame, top: 0.6, bottom: 0.3)
+        let inner = p.rr(18, 28, 68, 48, 6)
+        p.ctx.saveGState(); p.ctx.addPath(inner); p.ctx.clip()
+        p.fill(p.rr(18, 28, 34, 48, 0), hex(0xFFFFFF, 0.95))
+        p.fill(p.rr(52, 28, 34, 48, 0), hex(0xFFEBCC, 0.97))
+        let cool = hex(0xA8A0A0, 0.55), warm = hex(0xC98A5E, 0.6)
+        for (i, l) in [24, 18, 22].enumerated() { let y = CGFloat(41 + i * 11); p.line(24, y, 24 + CGFloat(l), y, cool, 2.6); p.line(58, y, 58 + CGFloat(l), y, warm, 2.6) }
+        p.ctx.restoreGState()
+        p.ctx.addPath(inner); p.ctx.setStrokeColor(hex(0xFFFFFF, 0.6).cgColor); p.ctx.setLineWidth(1); p.ctx.strokePath()
+        p.line(52, 28, 52, 76, hex(0xFFFFFF, 0.95), 2.2)
+        p.fill(p.circle(52, 52, 7.5), hex(0xFFFFFF), lift: true)
     },
-    // A takeout box with chopsticks.
-    "leftovers": Design(top: 0xFF9E8F, bottom: 0xD9383F) { p in takeout(p, chop: 0xFFFFFF, front: true, flaps: false, steam: false) },
-    // A note with bullet points.
+    "leftovers": Design(top: 0xFF9E8F, bottom: 0xD9383F) { p in
+        // The menu bar icon's takeout box: tapered box, zig-zag folded flaps, chopsticks rising out of it.
+        func m(_ x: CGFloat, _ y: CGFloat) -> CGPoint { CGPoint(x: 49 + (x - 9) * 5, y: 50 + (y - 9) * 5) }
+        p.line(m(10.6, 5.6).x, m(10.6, 5.6).y, m(15.4, 1.4).x, m(15.4, 1.4).y, hex(0xFFFFFF), 3.6)
+        p.line(m(12.0, 6.0).x, m(12.0, 6.0).y, m(16.8, 2.4).x, m(16.8, 2.4).y, hex(0xFFFFFF), 3.6)
+        let body = CGMutablePath()
+        body.move(to: m(3.2, 7.5)); body.addLine(to: m(14.8, 7.5)); body.addLine(to: m(12.8, 16.2)); body.addLine(to: m(5.2, 16.2)); body.closeSubpath()
+        p.liquid(body, top: 0.7, bottom: 0.3)
+        let flaps = CGMutablePath()
+        flaps.move(to: m(3.2, 7.5)); flaps.addLine(to: m(5.6, 4.9)); flaps.addLine(to: m(9, 6.3)); flaps.addLine(to: m(12.4, 4.9))
+        flaps.addLine(to: m(14.8, 7.5)); flaps.closeSubpath()
+        p.liquid(flaps, top: 0.92, bottom: 0.6, rim: 1.5)
+    },
+    // A glass keyboard key with a bullet and a playful squiggle.
     "jot": Design(top: 0xFFC2E6, bottom: 0xD46BD8) { p in
-        p.glass(p.rr(18, 18, 68, 68, 12), fill: 0.65, width: 1.4, lift: true)
-        p.line(18, 31, 86, 31, hex(0xFFFFFF, 0.9), 1.2)
-        let ink = hex(0xA63DB3, 0.85), soft = hex(0xA63DB3, 0.45)
-        for (i, len) in [32, 26, 20].enumerated() {
-            let y = CGFloat(45 + i * 13)
-            p.fill(p.circle(31, y, 3.6), ink)
-            p.line(40, y, 40 + CGFloat(len), y, soft, 3)
+        p.liquid(p.rr(16, 20, 72, 66, 16), top: 0.6, bottom: 0.25)
+        p.liquid(p.rr(23, 24, 58, 50, 11), top: 0.85, bottom: 0.45, lift: false, rim: 1.3)
+        let ink = hex(0xA63DB3, 0.8), soft = hex(0xA63DB3, 0.5)
+        p.fill(p.circle(35, 49, 4), ink)
+        let w = CGMutablePath()
+        for k in 0...40 {
+            let t = CGFloat(k) / 40, x = 45 + 27 * t, y = 49 + sin(t * .pi * 3) * 3.2
+            if k == 0 { w.move(to: CGPoint(x: x, y: y)) } else { w.addLine(to: CGPoint(x: x, y: y)) }
         }
+        p.ctx.addPath(w); p.ctx.setStrokeColor(soft.cgColor); p.ctx.setLineWidth(3.2); p.ctx.setLineCap(.round); p.ctx.setLineJoin(.round); p.ctx.strokePath()
     },
 ]
 
