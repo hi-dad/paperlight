@@ -26,7 +26,12 @@ cat > $APP/Contents/Info.plist <<PLIST
   <key>LSUIElement</key><true/>
 </dict></plist>
 PLIST
-codesign --force --sign - $APP
+# GitHub's release builds sign with Developer ID + hardened runtime + timestamp, as Apple's notarization needs.
+if [[ -n "$SIGN_IDENTITY" ]]; then
+  codesign --force --sign "$SIGN_IDENTITY" --options runtime --timestamp $APP
+else
+  codesign --force --sign - $APP
+fi
 echo "Built $APP"
 
 # ./build.sh dist  ->  makes dist/Paperlight.dmg to share with friends
