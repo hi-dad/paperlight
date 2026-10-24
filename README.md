@@ -12,7 +12,7 @@ Free · macOS 13 or newer · always the latest version
 ## Install
 
 1. Open **Paperlight.dmg** and drag Paperlight into **Applications**.
-2. Open it. When macOS says it can't verify the app, click **Done**, then go to **System Settings → Privacy & Security** and click **Open Anyway** (once).
+2. Open it, and click **Open** when macOS asks if you're sure. (It's signed and checked by Apple.)
 
 ## How to use it
 
