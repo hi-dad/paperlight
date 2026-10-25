@@ -25,7 +25,7 @@ Free · macOS 13 or newer · always the latest version
 
 No special permissions, no system settings changed. Quit it and your screen goes straight back to normal.
 
-**Update:** download again and replace the app. **Remove:** book icon → **Quit**, then drag it to the Trash.
+**Updates:** it offers new versions itself (or book icon → **Updates…**). **Remove:** book icon → **Quit**, then drag it to the Trash.
 
 <details><summary>Build it yourself</summary>
 

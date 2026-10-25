@@ -2,12 +2,13 @@
 # Builds Paperlight.app next to this script.
 set -e
 cd "$(dirname "$0")"
+source tools/sparkle.sh && sparkle_fetch   # self-updating (see tools/sparkle.sh)
 APP=Paperlight.app
 rm -rf $APP
 mkdir -p $APP/Contents/MacOS $APP/Contents/Resources
 # Universal binary: Apple Silicon + Intel Macs.
 for arch in arm64 x86_64; do
-  swiftc -parse-as-library -swift-version 5 -O -target $arch-apple-macos13 main.swift -o /tmp/Paperlight-$arch
+  swiftc -parse-as-library -swift-version 5 -O -target $arch-apple-macos13 "${SPARKLE_SWIFTC_FLAGS[@]}" main.swift -o /tmp/Paperlight-$arch
 done
 lipo -create /tmp/Paperlight-arm64 /tmp/Paperlight-x86_64 -output $APP/Contents/MacOS/Paperlight
 rm /tmp/Paperlight-arm64 /tmp/Paperlight-x86_64
@@ -26,10 +27,14 @@ cat > $APP/Contents/Info.plist <<PLIST
   <key>LSUIElement</key><true/>
 </dict></plist>
 PLIST
+sparkle_embed $APP
+sparkle_plist $APP paperlight
 # GitHub's release builds sign with Developer ID + hardened runtime + timestamp, as Apple's notarization needs.
 if [[ -n "$SIGN_IDENTITY" ]]; then
+  sparkle_sign $APP --force --sign "$SIGN_IDENTITY" --options runtime --timestamp
   codesign --force --sign "$SIGN_IDENTITY" --options runtime --timestamp $APP
 else
+  sparkle_sign $APP --force --sign -
   codesign --force --sign - $APP
 fi
 echo "Built $APP"

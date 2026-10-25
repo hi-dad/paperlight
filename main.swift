@@ -2,6 +2,7 @@ import SwiftUI
 import AppKit
 import Carbon
 import ServiceManagement
+import Sparkle
 
 struct Setting: Equatable {
     var warmth, brightness, contrast: Double   // contrast: -1 = softest, 0 = normal, +1 = sharpest
@@ -124,6 +125,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             NSApp.terminate(nil)
             return
         }
+        Updates.start()
         Filter.shared.apply()
         timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in Filter.shared.apply() }
         NotificationCenter.default.addObserver(forName: NSApplication.didChangeScreenParametersNotification,
@@ -194,6 +196,7 @@ struct MenuView: View {
             HStack {
                 Text("⌃⌥R toggles it anywhere").font(.caption).foregroundStyle(.secondary)
                 Spacer()
+                Button("Updates…") { Updates.check() }
                 Button("Quit") { NSApp.terminate(nil) }
             }
         }
@@ -212,6 +215,15 @@ struct MenuView: View {
             .font(.system(size: 9)).foregroundStyle(.tertiary)
         }
     }
+}
+
+// MARK: - Updates
+
+/// Self-updating from this app's GitHub releases (Sparkle): checks about once a day and offers new versions.
+enum Updates {
+    static let controller = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: nil, userDriverDelegate: nil)
+    static func start() { controller.startUpdater() }
+    static func check() { controller.checkForUpdates(nil) }
 }
 
 @main
